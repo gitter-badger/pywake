@@ -10,8 +10,6 @@ import threading
 import subprocess
 from awake import wol
 
-
-
 def main():
 	try: 
 		hostname = sys.argv[1]
@@ -31,8 +29,6 @@ def wake(hostname):
 			ip_addr=host.get('ip')
 			wol.send_magic_packet(mac_addr)
 			pingUntilUp(ip_addr)
-			print mac_addr
-			print ip_addr
 		except AttributeError:
 			print 'The hostname "' + hostname +'" is not in your wakefile.'
 
@@ -63,6 +59,5 @@ def pingUntilUp(ip_addr):
 		except subprocess.CalledProcessError:
 			# Ping failed, host is still down. Repeat loop.
 			pass
-#print data.get('fusion').get('ip')
 
 main()
