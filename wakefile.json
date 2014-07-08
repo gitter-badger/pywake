@@ -1,0 +1,10 @@
+{
+	"hostname" : {
+		"mac" : "xx:xx:xx:xx:xx:xx",
+		"ip" : "10.0.0.101"
+	},
+	"blackhole" : {
+		"mac" : "xx:xx:xx:xx:xx:xx",
+		"ip" : "10.0.0.102"
+	}	
+}

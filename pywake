@@ -1,0 +1,36 @@
+#!env python
+import json
+import sys
+import getopt
+import os.path
+from awake import wol
+def main():
+	try: 
+		hostname = sys.argv[1]
+		wake(hostname)
+	except IndexError:
+		print 'No hostname given.'
+		print 'Usage: pywake hostname'
+	
+def wake(hostname):
+	try:
+		wakefilePath = os.path.expanduser("~/.wakefile.json")
+		wakefile = open(wakefilePath,'r')
+		wakedata=json.load(wakefile)
+		host=wakedata.get(hostname)
+		try: 
+			mac_addr=host.get('mac')
+			ip_addr=host.get('ip')
+			wol.send_magic_packet(mac_addr)
+			print mac_addr
+			print ip_addr
+		except AttributeError:
+			print 'The hostname "' + hostname +'" is not in your wakefile.'
+
+	except IOError:
+		print 'Configuration file not found. Create it at \'/home/[username]/.wakefile.json\'.'
+	
+
+#print data.get('fusion').get('ip')
+
+main()
