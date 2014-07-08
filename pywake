@@ -1,9 +1,17 @@
 #!env python
 import json
 import sys
+import time
+import shlex
 import getopt
 import os.path
+import itertools
+import threading
+import subprocess
 from awake import wol
+
+
+
 def main():
 	try: 
 		hostname = sys.argv[1]
@@ -22,6 +30,7 @@ def wake(hostname):
 			mac_addr=host.get('mac')
 			ip_addr=host.get('ip')
 			wol.send_magic_packet(mac_addr)
+			pingUntilUp(ip_addr)
 			print mac_addr
 			print ip_addr
 		except AttributeError:
@@ -30,7 +39,30 @@ def wake(hostname):
 	except IOError:
 		print 'Configuration file not found. Create it at \'/home/[username]/.wakefile.json\'.'
 	
+done = False
+def animate():
+	for c in itertools.cycle(['|', '/', '-', '\\']):
+		if done:
+			break
+		sys.stdout.write('\rPinging until host is up' + c)
+		sys.stdout.flush()
+		time.sleep(0.1)
+	sys.stdout.write('\rHost is up!     \n')
 
+def pingUntilUp(ip_addr):
+	global done
+	command_line = "ping -c 1 " + ip_addr
+	args = shlex.split(command_line)
+	t = threading.Thread(target=animate)
+	t.start()
+
+	while done == False:
+		try:
+			subprocess.check_call(args,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			done = True
+		except subprocess.CalledProcessError:
+			# Ping failed, host is still down. Repeat loop.
+			pass
 #print data.get('fusion').get('ip')
 
 main()
