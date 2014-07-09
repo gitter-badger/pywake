@@ -36,6 +36,10 @@ def wake(hostname):
 		print 'Configuration file not found. Create it at \'/home/[username]/.wakefile.json\'.'
 	
 done = False
+
+"""
+the animate() function is from StackOverflow: http://stackoverflow.com/a/22029635/3270483
+"""
 def animate():
 	for c in itertools.cycle(['|', '/', '-', '\\']):
 		if done:
@@ -45,6 +49,9 @@ def animate():
 		time.sleep(0.1)
 	sys.stdout.write('\rHost is up!     \n')
 
+"""
+the pingUntilUp() function is from StackOverflow: http://stackoverflow.com/a/12490356
+"""
 def pingUntilUp(ip_addr):
 	global done
 	command_line = "ping -c 1 " + ip_addr
