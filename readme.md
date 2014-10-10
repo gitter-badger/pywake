@@ -21,3 +21,4 @@ The animate() function is from [StackOverflow](http://stackoverflow.com/a/220296
 The pingUntilUp() function is based on [this](http://stackoverflow.com/a/12490356) StackOverflow answer.
 
 The rest of this code is available under the MIT license. 
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/martijnvandijk/pywake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
